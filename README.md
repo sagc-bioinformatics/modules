@@ -20,7 +20,7 @@ See utils/template.nf for a process template which uses the following guidelines
 * Define a tag to each process, containing toolname, command, sample_id and/or rg_id.
     * {"BWA MEM ${sample_id} - ${rg_id}"}
 * Add 'set -euo pipefail' to each process.
-    * shell = ['/bin/bash', '-euo', 'pipefail']
+    * shell = `['/bin/bash', '-euo', 'pipefail']`
 * Do not define any runtime settings like cpus, memory and time.
 * Set process parameters on include:
     * include process from 'path/to/process.nf' params(optional: '')
