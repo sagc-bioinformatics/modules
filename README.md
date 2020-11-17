@@ -1,6 +1,10 @@
 # modules
 
+Nextflow modules used in SAGC Nextflow pipelines.
+
 ## Coding guidelines
+
+These guidelines were adapted from [UMCUGenetics](https://github.com/UMCUGenetics/NextflowModules/tree/3890843e528a14ada068294c21df731db7126c21).
 
 See utils/template.nf for a process template which uses the following guidelines.
 
@@ -15,7 +19,6 @@ See utils/template.nf for a process template which uses the following guidelines
     * BWA_0.7.17_MEM
 * Define a tag to each process, containing toolname, command, sample_id and/or rg_id.
     * {"BWA MEM ${sample_id} - ${rg_id}"}
-* Set a (hosted) container for each process.
 * Add 'set -euo pipefail' to each process.
     * shell = ['/bin/bash', '-euo', 'pipefail']
 * Do not define any runtime settings like cpus, memory and time.
