@@ -40,4 +40,4 @@ output:
     path("my_optional_file.txt",  optional: my_optional_file, emit: my_optional_file)
 ```
 
-Use params for resource files, for example genome.fasta, database.vcf.
+* Use params for resource files, for example genome.fasta, database.vcf.
