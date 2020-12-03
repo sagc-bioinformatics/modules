@@ -1,17 +1,21 @@
+process fastqc {
 
-process Fastqc {
-    tag "${sample_id} - FastQC"
-    publishDir "${params.outdir}/fastqc_${sample_id}", mode: 'copy'
+    tag { "FastQC - ${sample_id}" } 
+    publishDir "${outdir}/fastqc", mode: 'copy'
     // conda "$projectDir/conda.yml"
 
     input:
-    tuple sample_id, file(reads), file(I1)
+    tuple val(sample_id), file(reads)
+    val outdir
+    val opt_args
 
     output:
-    file "*.{zip,html}"
+    tuple val(sample_id), path("*.{zip,html}"), emit: fastqc_output
 
     script:
+    def usr_args = opt_args ?: ''
+
     """
-    fastqc -k 9 -t ${task.cpus} -q ${reads}
+    fastqc ${usr_args} -t ${task.cpus} -q ${reads}
     """
 }
