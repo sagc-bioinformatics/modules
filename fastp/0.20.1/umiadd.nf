@@ -2,7 +2,6 @@ process umiadd {
 
     tag { "Fastp UMI-ADD - ${sample_id}" }
     publishDir "${outdir}/umi_add", mode: 'copy'
-    // conda "$projectDir/conda.yml"
 
     input:
     tuple val(sample_id), file(reads), file(I1)
