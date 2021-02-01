@@ -1,11 +1,12 @@
 process starAlign {
-    tag { "STAR align - " sample_id }
+    tag { "STAR align - ${sample_id}"  }
     publishDir "${outdir}/STAR", mode: 'copy'
-    stageInMode 'copy' // Link read files + star index. Save on I/O
+    // stageInMode 'copy' // Link read files + star index. Save on I/O
+    label 'process_high'
 
     input:
-    path star_idx
     tuple val(sample_id), file(reads)
+    path star_idx
     val outdir
     val opt_args
 

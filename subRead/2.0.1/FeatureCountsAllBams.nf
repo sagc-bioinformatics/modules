@@ -1,26 +1,28 @@
+process featureCounts {
 
-// Gene expression data
-process FeatureCountsAllBams {
-    tag { sample_id + ' - FeatureCounts' }
-
-    publishDir "${params.outdir}/featureCounts", mode: 'copy'
-    // conda "$projectDir/conda.yml"
+    tag { "FeatureCounts" }
+    publishDir "${outdir}/featureCounts", mode: 'copy'
+    label 'process_low'
 
     input:
-    file GTF
-    tuple sample_id, 
-        file(bam),
-        file(bai)
+    file gtf
+    file bams
+    file bais
+    val outdir
+    val opt_args
 
     output:
-    file "${sample_id}.*"
+    file "*"
 
     script:
+    def usr_args = opt_args ?: ''
+
     """
     featureCounts \
+        ${usr_args} \
         -T ${task.cpus} \
-        -a ${GTF} \
-        -o ${sample_id}.counts.txt \
-        ${bam}
+        -a ${gtf} \
+        -o counts.txt \
+        ${bams}
     """
 }

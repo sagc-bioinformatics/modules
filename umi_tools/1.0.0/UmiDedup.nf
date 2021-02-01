@@ -1,23 +1,24 @@
-
-// Marking duplicates: BAM
-process UmiDedup {
-    tag { sample_id + " - UmiToolsDedup" }
-
-    publishDir "${params.outdir}/umi-dedup", mode: 'copy'
-    // conda "$projectDir/conda.yml"
+process umiDedup {
+    
+    tag { "UmiToolsDedup - ${sample_id}" }
+    publishDir "${params.outdir}/umi_dedup", mode: 'copy'
+    label 'process_medium'
 
     input:
-    tuple sample_id,
+    tuple val(sample_id),
         file(bam),
         file(bai)
+    val outdir
+    val opt_args
 
     output:
-    tuple sample_id, 
-        file("${sample_id}.umidup.bam"),
-        file("${sample_id}.umidup.bam.bai")
+    path "${sample_id}.umidup.bam", emit: bam
+    path "${sample_id}.umidup.bam.bai", emit: bai
     file "*.{log,err,tsv}"
 
     script:
+    def usr_args = opt_args ?: ''
+
     """
     umi_tools dedup \
     -I ${bam} \

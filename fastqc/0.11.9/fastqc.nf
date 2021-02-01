@@ -2,7 +2,7 @@ process fastqc {
 
     tag { "FastQC - ${sample_id}" } 
     publishDir "${outdir}/fastqc", mode: 'copy'
-    // conda "$projectDir/conda.yml"
+    label 'process_low'
 
     input:
     tuple val(sample_id), file(reads)
