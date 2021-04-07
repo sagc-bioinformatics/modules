@@ -1,6 +1,6 @@
-process bcl2fastq {
+process bcl2fastq_single_multiplex {
 
-    tag { "Bcl2Fastq" }
+    tag { "Bcl2Fastq - single - multiplex" }
     publishDir "${outdir}/fastq", mode: 'copy'
     stageInMode 'copy'
     label 'process_medium'
@@ -12,19 +12,16 @@ process bcl2fastq {
 
     output:
     path "*_R1*.fastq.gz", emit: R1
-    path "*_R3*.fastq.gz", emit: R2
-    path "*_R2*.fastq.gz", emit: I1
+    path "*_R2*.fastq.gz", emit: R2
 
     script:
-
     """
     bcl2fastq \
         --runfolder-dir ${path_bcl} \
         -p ${task.cpus} \
         --output-dir \$PWD \
-        --use-bases-mask Y*,I8Y8,Y* \
+        --use-bases-mask ... \
         --mask-short-adapter-reads=8 \
-        --create-fastq-for-index-reads \
         --no-lane-splitting \
         --sample-sheet ${sampleSheet} \
         --minimum-trimmed-read-length=8 \

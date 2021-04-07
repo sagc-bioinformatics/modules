@@ -1,7 +1,7 @@
 process fastqc {
 
     tag { "FastQC - ${sample_id}" } 
-    publishDir "${outdir}/fastqc", mode: 'copy'
+    publishDir "${outdir}/QC-results/fastqc", mode: 'copy'
     label 'process_low'
 
     input:

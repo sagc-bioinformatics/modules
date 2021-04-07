@@ -23,8 +23,8 @@ process umiadd {
         -I ${I1}  \
         -o ${sample_id}_U1.fastq.gz \
         -O ${sample_id}_umi1.fastq.gz \
-        --json ${sample_id}.json \
-        --html ${sample_id}.html \
+        --json ${sample_id}_U1.json \
+        --html ${sample_id}_U1.html \
         --umi --umi_loc=read2 --umi_len=8 \
         -G -Q -A -L -w 1 -u 100 -n 8 -Y 100
 
@@ -34,6 +34,8 @@ process umiadd {
         -I ${I1}  \
         -o ${sample_id}_U2.fastq.gz \
         -O ${sample_id}_umi2.fastq.gz \
+        --json ${sample_id}_U2.json \
+        --html ${sample_id}_U2.html \
         --umi --umi_loc=read2 --umi_len=8 \
         -G -Q -A -L -w 1 -u 100 -n 8 -Y 100
     """
