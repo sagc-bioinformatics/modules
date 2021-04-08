@@ -7,6 +7,8 @@ process multiqc {
     input:
     file fastqc_in
     file bcl_stats
+    file bbduck_stats
+    file kraken2_stats
     val outdir
     // val opt_args 
 

@@ -16,6 +16,6 @@ process fastqc {
     def usr_args = opt_args ?: ''
 
     """
-    fastqc ${usr_args} -t ${task.cpus} -q ${reads}
+    fastqc ${usr_args} -t ${task.cpus} -q ${reads[0]}
     """
 }
