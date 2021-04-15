@@ -1,13 +1,13 @@
 process bcl2fastq_paired_dual_index {
 
-    tag { "Bcl2Fastq paired dual" }
+    tag { "Bcl2Fastq paired dual index" }
     publishDir "${outdir}/fastq", mode: 'copy'
     // stageInMode 'copy'
     label 'process_medium'
 
     input:
     file sampleSheet
-    val underscore
+    // val underscore
     val sampleProject
     val outdir
     path path_bcl 
@@ -20,13 +20,15 @@ process bcl2fastq_paired_dual_index {
 
     script:
     """
+    cleanSamplesheet.py ${sampleSheet}
+
     bcl2fastq \
-        --runfolder-dir ${path_bcl.baseName} \
+        --runfolder-dir ${path_bcl} \
         -p ${task.cpus} \
         --output-dir \$PWD \
         --use-bases-mask Y*,I*,I*,Y* \
         --no-lane-splitting \
-        --sample-sheet ${sampleSheet} \
+        --sample-sheet nf-SampleSheet.csv \
         --minimum-trimmed-read-length=8 \
         --ignore-missing-positions \
         --ignore-missing-controls \
@@ -38,22 +40,12 @@ process bcl2fastq_paired_dual_index {
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
-    if [[ ${underscore} == 'true' ]]; then
-        for f in *R1_001.fastq.gz; do
-            BN=\${f%_S*}
-            BNCLEAN=\${BN//_/-}
+    for f in *R1_001.fastq.gz; do
+        BN=\${f%_S*}
 
-            mv \${f} \${BNCLEAN}_R1.fastq.gz
-            mv \${BN}*_R2_001.fastq.gz \${BNCLEAN}_R2.fastq.gz
-        done
-    else
-        for f in *R1_001.fastq.gz; do
-            BN=\${f%_S*}
-
-            mv \${f} \${BN}_R1.fastq.gz
-            mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
-        done
-    fi
+        mv \${f} \${BN}_R1.fastq.gz
+        mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
+    done
     """
 }
  
