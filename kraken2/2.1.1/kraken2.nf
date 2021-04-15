@@ -2,7 +2,7 @@ process kraken2 {
 
     tag { "Kraken2 - ${sample_id}" } 
     publishDir "${outdir}/QC-results/kraken2", mode: 'copy'
-    label 'process_medium'
+    label 'process_kraken'
 
     input:
     tuple val(sample_id), file(reads)
