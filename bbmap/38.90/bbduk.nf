@@ -21,7 +21,7 @@ process bbduk {
 	    	out1=${sample_id}_clean_1.gz \
             out2=${sample_id}_clean_2.gz \
 	    	ref=/data/bioinformatics/bcbio_genomes/others/rRNA_contamination/rRNA-db-contam.fasta.gz k=31 mm=f \
-	    	stats=${sample_id}_stats.txt
+	    	stats=${sample_id}.stats
 
         rm *clean*.gz
         """
