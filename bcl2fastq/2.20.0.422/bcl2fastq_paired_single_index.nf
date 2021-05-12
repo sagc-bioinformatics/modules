@@ -1,14 +1,14 @@
 process bcl2fastq_paired_single_index {
 
     tag { "Bcl2Fastq paired single index" }
-    publishDir "${outdir}/fastq", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/fastq", mode: 'copy'
     // stageInMode 'copy'
     label 'process_medium'
 
     input:
     file sampleSheet
-    // val underscore
     val sampleProject
+    val sampleProjectTF
     val outdir
     val path_bcl 
 
@@ -17,6 +17,7 @@ process bcl2fastq_paired_single_index {
     path "*_R2.fastq.gz", emit: R2
     path "Stats", emit: bcl_stats
     path "Reports", emit: bcl_reports
+    file "fastq.md5"
 
     script:
     """
@@ -36,7 +37,7 @@ process bcl2fastq_paired_single_index {
 
     rm Undetermined*.fastq.gz
 
-    if [[ ${sampleProject} == 'true' ]]; then
+    if [[ ${sampleProjectTF} == 'true' ]]; then
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
@@ -46,6 +47,8 @@ process bcl2fastq_paired_single_index {
         mv \${f} \${BN}_R1.fastq.gz
         mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
     done
+
+    md5sum *fastq.gz > fastq.md5
     """
 }
  

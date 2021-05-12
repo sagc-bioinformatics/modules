@@ -1,14 +1,14 @@
 process bcl2fastq_paired_umi {
 
     tag { "Bcl2Fastq paired umi" }
-    publishDir "${outdir}/fastq", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/fastq", mode: 'copy'
     // stageInMode 'copy'
     label 'process_medium'
 
     input:
     file sampleSheet
-    // val underscore
     val sampleProject
+    val sampleProjectTF
     val outdir
     val path_bcl 
 
@@ -18,6 +18,7 @@ process bcl2fastq_paired_umi {
     path "*_R2.fastq.gz", emit: I1
     path "Stats", emit: bcl_stats
     path "Reports", emit: bcl_reports
+    file "fastq.md5"
 
     script:
     """
@@ -39,7 +40,7 @@ process bcl2fastq_paired_umi {
 
     rm Undetermined*.fastq.gz
 
-    if [[ ${sampleProject} == 'true' ]]; then
+    if [[ ${sampleProjectTF} == 'true' ]]; then
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
@@ -50,5 +51,7 @@ process bcl2fastq_paired_umi {
         mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
         mv \${BN}*_R3_001.fastq.gz \${BN}_R3.fastq.gz
     done
+
+    md5sum *fastq.gz > fastq.md5
     """
 }

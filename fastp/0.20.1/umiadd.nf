@@ -1,21 +1,19 @@
 process umiadd {
 
     tag { "Fastp UMI-ADD - ${sample_id}" }
-    publishDir "${outdir}/umi_add", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/umi_add", mode: 'copy'
     label 'process_low'
 
     input:
     tuple val(sample_id), file(reads), file(I1)
     val outdir
-    val opt_args
+    val sampleProject
 
     output:
     tuple val(sample_id), file("${sample_id}_U{1,2}.fastq.gz"), emit: reads
     file("${sample_id}.{html,json}")
 
     script:
-    def usr_args = opt_args ?: ''
-
     """
     fastp \
         ${usr_args} \

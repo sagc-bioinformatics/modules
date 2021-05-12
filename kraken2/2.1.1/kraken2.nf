@@ -1,12 +1,13 @@
 process kraken2 {
 
     tag { "Kraken2 - ${sample_id}" } 
-    publishDir "${outdir}/QC-results/kraken2", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/QC-results/kraken2", mode: 'copy'
     label 'process_kraken'
 
     input:
     tuple val(sample_id), file(reads)
     val outdir
+    val sampleProject
 
     output:
     path "${sample_id}.kraken2", emit: stats

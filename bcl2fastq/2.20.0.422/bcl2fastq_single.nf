@@ -1,14 +1,14 @@
 process bcl2fastq_single {
 
     tag { "Bcl2Fastq single end" }
-    publishDir "${outdir}/fastq", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/fastq", mode: 'copy'
     // stageInMode 'copy'
     label 'process_medium'
 
     input:
     file sampleSheet
-    // val underscore
     val sampleProject
+    val sampleProjectTF
     val outdir
     val path_bcl 
 
@@ -16,6 +16,7 @@ process bcl2fastq_single {
     path "*_R1.fastq.gz", emit: R1
     path "Stats", emit: bcl_stats
     path "Reports", emit: bcl_reports
+    file "fastq.md5"
 
     script:
     """
@@ -35,7 +36,7 @@ process bcl2fastq_single {
 
     rm Undetermined*.fastq.gz
 
-    if [[ ${sampleProject} == 'true' ]]; then
+    if [[ ${sampleProjectTF} == 'true' ]]; then
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
@@ -43,5 +44,7 @@ process bcl2fastq_single {
         BN=\${f%_S*}
         mv \${f} \${BN}_R1.fastq.gz
     done
+
+    md5sum *fastq.gz > fastq.md5
     """
 }

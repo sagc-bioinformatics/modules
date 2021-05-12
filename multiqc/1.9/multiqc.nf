@@ -1,7 +1,7 @@
 process multiqc {
 
     tag { "MultiQC" } 
-    publishDir "${outdir}/QC-results", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/QC-results", mode: 'copy'
     label 'process_low'
 
     input:
@@ -10,6 +10,7 @@ process multiqc {
     file bbduck_stats
     file kraken2_stats
     val outdir
+    val sampleProject
     // val opt_args 
 
     output:

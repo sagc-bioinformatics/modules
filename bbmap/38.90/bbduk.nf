@@ -1,13 +1,14 @@
 process bbduk {
 
     tag { "BBDuk - ${sample_id}" } 
-    publishDir "${outdir}/QC-results/bbduk", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/QC-results/bbduk", mode: 'copy'
     label 'process_low'
 
     input:
     tuple val(sample_id), file(reads)
     val library_type
     val outdir
+    val sampleProject
 
     output:
     path "${sample_id}.stats", emit: stats
