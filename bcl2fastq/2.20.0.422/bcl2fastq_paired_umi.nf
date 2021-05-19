@@ -46,7 +46,7 @@ process bcl2fastq_paired_umi {
     for f in *R1_001.fastq.gz; do
         BN=\${f%_S*}
 
-        mv \${f} \${BNCLEAN}_R1.fastq.gz
+        mv \${f} \${BN}_R1.fastq.gz
         mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
         mv \${BN}*_R3_001.fastq.gz \${BN}_R3.fastq.gz
     done
