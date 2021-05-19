@@ -14,8 +14,8 @@ process bcl2fastq_paired_umi {
 
     output:
     path "*_R1.fastq.gz", emit: R1
-    path "*_R3.fastq.gz", emit: R2
-    path "*_R2.fastq.gz", emit: I1
+    path "*_R2.fastq.gz", emit: R2
+    path "*_UMI.fastq.gz", emit: UMI
     path "Stats", emit: bcl_stats
     path "Reports", emit: bcl_reports
 
@@ -27,7 +27,7 @@ process bcl2fastq_paired_umi {
         --runfolder-dir ${path_bcl} \
         -p ${task.cpus} \
         --output-dir \$PWD \
-        --use-bases-mask Y*,I8N*,Y* \
+        --use-bases-mask Y*,I8Y8,Y* \
         --mask-short-adapter-reads=8 \
         --create-fastq-for-index-reads \
         --no-lane-splitting \
@@ -47,8 +47,8 @@ process bcl2fastq_paired_umi {
         BN=\${f%_S*}
 
         mv \${f} \${BN}_R1.fastq.gz
-        mv \${BN}*_R2_001.fastq.gz \${BN}_R2.fastq.gz
-        mv \${BN}*_R3_001.fastq.gz \${BN}_R3.fastq.gz
+        mv \${BN}*_R2_001.fastq.gz \${BN}_UMI.fastq.gz
+        mv \${BN}*_R3_001.fastq.gz \${BN}_R2.fastq.gz
     done
     """
 }
