@@ -13,7 +13,7 @@ process rclone {
     """
     rclone copy \
         --progress \
-        --transfers 8 \
+        --transfers ${task.cpus} \
         ${outdir}/${sampleProject} CloudStor:/Shared/SAGC/${sampleProject}
     """
 }
