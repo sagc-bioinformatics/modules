@@ -5,7 +5,7 @@ process umiadd {
     label 'process_low'
 
     input:
-    tuple val(sample_id), file(reads), file(I1)
+    tuple val(sample_id), file(reads), file(UMI)
     val outdir
     val sampleProject
 
@@ -18,7 +18,7 @@ process umiadd {
     fastp \
         ${usr_args} \
         -i ${reads[0]}  \
-        -I ${I1}  \
+        -I ${UMI}  \
         -o ${sample_id}_U1.fastq.gz \
         -O ${sample_id}_umi1.fastq.gz \
         --json ${sample_id}_U1.json \
@@ -29,7 +29,7 @@ process umiadd {
     fastp \
         ${usr_args} \
         -i ${reads[1]}  \
-        -I ${I1}  \
+        -I ${UMI}  \
         -o ${sample_id}_U2.fastq.gz \
         -O ${sample_id}_umi2.fastq.gz \
         --json ${sample_id}_U2.json \
