@@ -27,7 +27,6 @@ process bcl2fastq_paired_single_index {
         --runfolder-dir ${path_bcl} \
         -p ${task.cpus} \
         --output-dir \$PWD \
-        --use-bases-mask Y*,I*,Y* \
         --no-lane-splitting \
         --sample-sheet nf-SampleSheet.csv \
         --minimum-trimmed-read-length=8 \
@@ -51,4 +50,3 @@ process bcl2fastq_paired_single_index {
     md5sum *fastq.gz > fastq.md5
     """
 }
- 

@@ -26,7 +26,6 @@ process bcl2fastq_single {
         --runfolder-dir ${path_bcl} \
         -p ${task.cpus} \
         --output-dir \$PWD \
-        --use-bases-mask Y*,I8N* \
         --no-lane-splitting \
         --sample-sheet nf-SampleSheet.csv \
         --minimum-trimmed-read-length=8 \
