@@ -29,7 +29,7 @@ process bcl2fastq_single_multiplex {
         --ignore-missing-controls \
         --ignore-missing-filter
 
-    rm Undetermined*.fastq.gz
+    rm -f Undetermined*.fastq.gz
     """
 }
  

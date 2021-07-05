@@ -33,7 +33,7 @@ process bcl2fastq_single {
         --ignore-missing-controls \
         --ignore-missing-filter
 
-    rm Undetermined*.fastq.gz
+    rm -f Undetermined*.fastq.gz
 
     if [[ ${sampleProjectTF} == 'true' ]]; then
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
