@@ -5,6 +5,7 @@ process factera {
     label 'process_factera'
 
     input:
+    path factera
 	path bam
 	path exons
 	path bitRef
@@ -14,6 +15,6 @@ process factera {
 
     script:
     """
-	perl factera.pl -o ./ ${bam} ${exons} ${bitRef}
+	perl ${factera} -o ./ ${bam} ${exons} ${bitRef}
     """
 }

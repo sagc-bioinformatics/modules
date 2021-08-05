@@ -1,13 +1,12 @@
 process markDupSambamba {
     tag { "Sambamba MarkDups - ${sample_id}" }
-    publishDir "${outdir}/markDuplicates", mode: 'copy'
+    publishDir "${params.outdir}/markDuplicates", mode: 'copy'
     label 'process_medium'
 
     input:
     tuple val(sample_id),
         file(bam),
         file(bai)
-    val outdir
 
     output:
     path "${sample_id}.markdup.bam", emit: bam
