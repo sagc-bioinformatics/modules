@@ -31,7 +31,8 @@ process bcl2fastq_single {
         --minimum-trimmed-read-length=8 \
         --ignore-missing-positions \
         --ignore-missing-controls \
-        --ignore-missing-filter
+        --ignore-missing-filter \
+        --barcode-mismatches=1
 
     rm -f Undetermined*.fastq.gz
 
