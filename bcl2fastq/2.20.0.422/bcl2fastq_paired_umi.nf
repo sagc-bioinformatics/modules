@@ -39,14 +39,16 @@ process bcl2fastq_paired_umi {
         --ignore-missing-filter \
         --barcode-mismatches=1
 
-    rm -f Undetermined*.fastq.gz
+    #rm -f Undetermined*.fastq.gz
 
+    # Move FASTQ files from subdirectories into the top level
     if [[ ${sampleProjectTF} == 'true' ]]; then
-        find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
+        find . -mindepth 2 -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
     shopt -s nullglob
 
+    # Rename FASTQ files
     for f in *R1_001.fastq.gz; do
         BN=\${f%_S*}
 
@@ -55,6 +57,6 @@ process bcl2fastq_paired_umi {
         mv \${BN}*_R3_001.fastq.gz \${BN}_R2.fastq.gz
     done
 
-    md5sum *fastq.gz > fastq.md5
+    find . -maxdepth 1 -type f -name '*.fastq.gz' -exec md5sum {} + > fastq.md5
     """
 }
