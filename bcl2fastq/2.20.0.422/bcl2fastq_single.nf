@@ -40,6 +40,8 @@ process bcl2fastq_single {
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
+    shopt -s nullglob
+
     for f in *R1_001.fastq.gz; do
         BN=\${f%_S*}
         mv \${f} \${BN}_R1.fastq.gz

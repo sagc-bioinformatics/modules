@@ -41,6 +41,8 @@ process bcl2fastq_paired_single_index {
         find . -type f -name '*.fastq.gz' -exec mv -t \$PWD {} +
     fi
 
+    shopt -s nullglob
+
     for f in *R1_001.fastq.gz; do
         BN=\${f%_S*}
 
