@@ -7,7 +7,7 @@ process fusioncatcher {
 
     input:
     tuple val(sample_id), file(reads)
-	path genome_lib
+	path data_dir
      
     output:
     tuple val(sample_id), val(outdir)
