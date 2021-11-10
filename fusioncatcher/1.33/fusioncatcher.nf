@@ -1,9 +1,8 @@
+process fusioncatcher_v133 {
 
-process fusioncatcher_v099 {
-
-    tag { "fusioncatcher - ${sample_id}" } 
-    publishDir "${outdir}/${sampleProject}/fusioncatcher", mode: 'copy'
-    label 'process_fusioncatcher'
+    tag { "fusioncatcher_v133 - ${sample_id}" } 
+    publishDir "${outdir}/${sampleProject}/fusioncatcher_v133", mode: 'copy'
+    label 'process_fusioncatcher_v133'
 
     input:
     tuple val(sample_id), file(reads)
@@ -11,7 +10,7 @@ process fusioncatcher_v099 {
      
     output:
     tuple val(sample_id), val(outdir)
-    file("${sample_id}_fusioncatcher.txt")
+    file("${sample_id}_fusioncatcher_v133.txt")
 
     script:
     """
@@ -22,6 +21,6 @@ process fusioncatcher_v099 {
         -o ${outdir} \\
         --skip-blat 
 			
-	mv final-list_candidate-fusion-genes.txt ${sample_id}_fusioncatcherv099.txt
+	mv final-list_candidate-fusion-genes.txt ${sample_id}_fusioncatcher_v133.txt
     """
 }
