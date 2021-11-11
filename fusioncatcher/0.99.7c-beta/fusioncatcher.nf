@@ -2,7 +2,7 @@
 process fusioncatcher_v099 {
 
     tag { "fusioncatcher - ${sample_id}" } 
-    publishDir "${outdir}/${sampleProject}/fusioncatcher", mode: 'copy'
+    publishDir "${outdir}/${sampleProject}/fusioncatcher_v099", mode: 'copy'
     label 'process_fusioncatcher'
 
     input:
