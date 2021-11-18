@@ -1,30 +1,27 @@
 process arriba {
 
-	tag { "Arriba - ${sample_id}" } 
-    publishDir "${outdir}/${sampleProject}/Arriba", mode: 'copy'
+	tag { "Arriba - ${filename}" } 
+    publishDir "${outdir}/${group}/${filename}/Arriba", mode: 'copy'
     label 'process_arriba'
 
     input:
-	tuple val(sample_id), file(reads)
-	path star_idx
-	path blacklist
-	path assembly
-	path annotation
-	path known
-	path pdomains
+	tuple val(filename), val(group), val(sample), val(path), file(reads)
+	file assembly
+	file gtf
+	file blacklist
+	file knownfus
+	file proteindom
+	val staridx
 	val outdir
-	val opt_args
     	 
     output:
-    tuple val(sample_id),
-	file("${sample_id}.arriba.fusions.tsv"),
-	file("${sample_id}.arriba.fusions.discarded.tsv")
+	file "${filename}.arriba.fusions.tsv"
+	file "${filename}.arriba.fusions.discarded.tsv"
 
     script:
     """
 	STAR \
-		--runThreadN 8 \
-		--genomeDir ${star_idx} \
+		--genomeDir ${staridx} \
 		--genomeLoad NoSharedMemory \
 		--readFilesIn ${reads} \
 		--runThreadN ${task.cpus} \
@@ -47,14 +44,13 @@ process arriba {
 		--chimMultimapNmax 50 |
 	arriba \
     	-x /dev/stdin \
-	    -o ${sample_id}.arriba.fusions.tsv \
-	    -O ${sample_id}.arriba.fusions.discarded.tsv \
-		-a ${annotation}.gtf \
-		-g ${annotation}.gtf \
-		-b ${blacklist}.tsv.gz \
-		-k ${known}.tsv.gz \
-		-t ${known}.tsv.gz \
-		-p ${pdomains}.gff3	
+	    -o ${filename}.arriba.fusions.tsv \
+	    -O ${filename}.arriba.fusions.discarded.tsv \
+		-a ${assembly} \
+		-g ${gtf} \
+		-b ${blacklist} \
+		-k ${knownfus}.tsv.gz \
+		-p ${proteindom}.gff3
     """
 }
 

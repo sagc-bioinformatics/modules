@@ -1,26 +1,26 @@
 process fusioncatcher_v133 {
 
-    tag { "fusioncatcher_v133 - ${sample_id}" } 
-    publishDir "${outdir}/${sampleProject}/fusioncatcher_v133", mode: 'copy'
+    tag { "fusioncatcher_v133 - ${filename}" } 
+    publishDir "${outdir}/${group}/${filename}/fusioncatcher_v133", mode: 'copy'
     label 'process_fusioncatcher_v133'
 
+    conda '/data/bioinformatics/all_genomics_analysis/conda_environments/fusionCatcher-1.33'
+
     input:
-    tuple val(sample_id), file(reads)
-	path data_dir
+    tuple val(filename), val(group), val(sample), val(path), file(reads)
+	val outdir
      
     output:
-    tuple val(sample_id), val(outdir)
-    file("${sample_id}_fusioncatcher_v133.txt")
+    file "${filename}_fusioncatcher_v133.txt"
 
     script:
     """
-	fusioncatcher \\
-        -d ${data_dir} \\
-        --threads ${task.cpus} \\
-        --i "${reads[0]},${reads[1]}" \\
-        -o ${outdir} \\
-        --skip-blat 
+	fusioncatcher \
+        --threads ${task.cpus} \
+        --i ${reads[0]},${reads[1]} \
+        -o \${PWD} \
+        --skip-blat
 			
-	mv final-list_candidate-fusion-genes.txt ${sample_id}_fusioncatcher_v133.txt
+	mv final-list_candidate-fusion-genes.txt ${filename}_fusioncatcher_v133.txt
     """
 }
