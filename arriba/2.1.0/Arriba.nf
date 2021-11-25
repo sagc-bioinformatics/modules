@@ -6,11 +6,11 @@ process arriba {
 
     input:
 	tuple val(filename), val(group), val(sample), val(path), file(reads)
-	file assembly
-	file gtf
-	file blacklist
-	file knownfus
-	file proteindom
+	val assembly
+	val gtf
+	val blacklist
+	val knownfus
+	val proteindom
 	val staridx
 	val outdir
     	 
@@ -49,8 +49,8 @@ process arriba {
 		-a ${assembly} \
 		-g ${gtf} \
 		-b ${blacklist} \
-		-k ${knownfus}.tsv.gz \
-		-p ${proteindom}.gff3
+		-k ${knownfus} \
+		-p ${proteindom}
     """
 }
 
