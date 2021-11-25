@@ -4,7 +4,7 @@ process fusioncatcher_v133 {
     publishDir "${outdir}/${group}/${filename}/fusioncatcher_v133", mode: 'copy'
     label 'process_fusioncatcher_v133'
 
-    conda '/data/bioinformatics/all_genomics_analysis/conda_environments/fusionCatcher-1.33'
+    conda '/data/bioinformatics/all_genomics_analysis/conda_environments/fusioncatcher-1.33'
 
     input:
     tuple val(filename), val(group), val(sample), val(path), file(reads)
