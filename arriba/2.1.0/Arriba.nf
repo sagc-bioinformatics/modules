@@ -3,6 +3,7 @@ process arriba {
 	tag { "Arriba - ${filename}" } 
     publishDir "${outdir}/${group}/${filename}/Arriba", mode: 'copy'
     label 'process_arriba'
+	conda "$projectDir/conf/arriba-2.1.0.yml"
 
     input:
 	tuple val(filename), val(group), val(sample), val(path), file(reads)
