@@ -3,7 +3,6 @@ process starFusion {
     tag { "STAR_Fusion - ${filename}" } 
     publishDir "${outdir}/${group}/${filename}/STAR_fusion", mode: 'copy'
     label 'process_starfusion'
-    conda "$projectDir/conf/star-fusion-1.10.0.yml"
 
     input:
     tuple val(filename), val(group), val(sample), val(path), file(reads)
